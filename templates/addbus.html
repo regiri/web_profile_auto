@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Добавление автобуса</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.number.label }}<br>
+        {{ form.number(class="form-control") }}<br>
+        {% for error in form.number.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.brand.label }}<br>
+        {{ form.brand(class="form-control") }}<br>
+        {% for error in form.brand.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.last_maintenance.label }}<br>
+        {{ form.last_maintenance(class="form-control") }}<br>
+        {% for error in form.last_maintenance.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.next_maintenance.label }}<br>
+        {{ form.next_maintenance(class="form-control") }}<br>
+        {% for error in form.next_maintenance.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.seats_number.label }}<br>
+        {{ form.seats_number(class="form-control") }}<br>
+        {% for error in form.seats_number.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.about.label }}<br>
+        {{ form.about(class="form-control") }}<br>
+        {% for error in form.about.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-success") }}</p>
+    {{message}}
+</form>
+{% endblock %}

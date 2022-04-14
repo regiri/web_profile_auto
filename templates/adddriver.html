@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Добавление водителя</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.name.label }}<br>
+        {{ form.name(class="form-control") }}<br>
+        {% for error in form.name.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.surname.label }}<br>
+        {{ form.surname(class="form-control") }}<br>
+        {% for error in form.surname.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.lastname.label }}<br>
+        {{ form.lastname(class="form-control") }}<br>
+        {% for error in form.lastname.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.phone_number.label }}<br>
+        {{ form.phone_number(class="form-control", type="tel") }}<br>
+        {% for error in form.phone_number.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{message}}
+</form>
+{% endblock %}
