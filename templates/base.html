@@ -9,26 +9,25 @@
           crossorigin="anonymous">
     <title>{{title}}</title>
 </head>
-<body>
-<header>
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="/index">Профиль Авто</a>
-        <div>
-            {% if current_user.is_authenticated %}
-                <a class="btn btn-success" href="/add_driver">Добавить водителя</a>
-                <a class="btn btn-success" href="/add_bus">Добавить автобус</a>
-                <a class="btn btn-success" href="/add_route">Добавить рейс</a>
-                <a class="btn btn-danger" href="/logout">Выйти</a>
-            {% else %}
-                <a class="btn btn-primary" href="/login">Войти</a>
-                <a class="btn btn-success" href="/register">Зарегистрироваться</a>
-                <a class="nav-item disabled">Профиль Авто</a>
-            {% endif %}
-        </div>
-    </nav>
-</header>
-<main role="main" class="container">
-    {% block content %}{% endblock %}
-</main>
-</body>
+    <body>
+        <header>
+            <nav class="navbar navbar-dark bg-primary">
+                <a class="navbar-brand" href="#">Профиль Авто</a>
+                <div>
+                    {% if current_user.is_authenticated %}
+                        <a class="btn btn-outline-light" href="/all_buses">Автобусы</a>
+                        <a class="btn btn-outline-light" href="/all_drivers">Водители</a>
+                        <a class="btn btn-outline-light" href="/all_routes">Рейсы</a>
+                        <a class="btn btn-danger" href="/logout">Выйти</a>
+                    {% else %}
+                        <a class="btn btn-outline-light" href="/login">Войти</a>
+                        <a class="btn btn-outline-light" href="/register">Зарегистрироваться</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+        <main role="main" class="container">
+            {% block content %}{% endblock %}
+        </main>
+    </body>
 </html>

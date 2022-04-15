@@ -28,5 +28,5 @@ class RouteForm(FlaskForm):
     driver = QuerySelectField('Водитель', validators=[DataRequired()], query_factory=driver_choices)
     bus = QuerySelectField('Автобус', validators=[DataRequired()], query_factory=bus_choices)
 
-    submit = SubmitField('Создать')
+    submit = SubmitField('Подтвердить')
 

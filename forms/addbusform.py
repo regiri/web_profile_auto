@@ -11,4 +11,4 @@ class BusForm(FlaskForm):
     seats_number = IntegerField('Количество посадочных мест', validators=[DataRequired()])
     about = TextAreaField('Комментарий')
 
-    submit = SubmitField('Создать автобус')
+    submit = SubmitField('Подтвердить')

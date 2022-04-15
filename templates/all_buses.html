@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ title }}</h2>
+{% for item in buses%}
+<div class="col-md6 border rounded">
+    <h3>Номер: {{ item.number }}</h3>
+    <div>Следующее ТО: {{ item.next_maintenance.day }}:{{ item.next_maintenance.month }}:{{ item.next_maintenance.year }}</div>
+    <div>{{ item.about }}</div>
+    <div>
+        <a class="btn btn-outline-secondary" href="/edit_bus/{{ item.id }}">
+            Изменить
+        </a>
+        <a class="btn btn-outline-danger" href="/delete_bus/{{ item.id }}">
+            Удалить
+        </a>
+    </div>
+</div>
+{% endfor %}
+    <a class="btn btn-outline-primary" href="/add_bus">Добавить автобус</a>
+{% endblock %}

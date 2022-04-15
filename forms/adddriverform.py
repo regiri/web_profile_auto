@@ -9,7 +9,7 @@ class DriverForm(FlaskForm):
     surname = StringField('Фамилия', validators=[DataRequired()])
     lastname = StringField('Отчество', validators=[DataRequired()])
     phone_number = TelField('Номер телефона', validators=[DataRequired()])
-    submit = SubmitField('Добавить водителя')
+    submit = SubmitField('Подтвердить')
 
     def validate_phone(self):
         try:

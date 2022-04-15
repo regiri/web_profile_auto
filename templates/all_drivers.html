@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ title }}</h2>
+{% for item in drivers%}
+<div class="col-md6 border rounded">
+    <h3>{{ item.surname }}</h3>
+    <div>{{ item.name }}</div>
+    <div>Тел.: {{ item.phone_number }}</div>
+    <div>
+        <a class="btn btn-outline-secondary" href="/edit_driver/{{ item.id }}">
+            Изменить
+        </a>
+        <a class="btn btn-outline-danger" href="/delete_driver/{{ item.id }}">
+            Удалить
+        </a>
+    </div>
+</div>
+{% endfor %}
+    <a class="btn btn-outline-primary" href="/add_driver">Добавить водителя</a>
+{% endblock %}
