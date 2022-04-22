@@ -14,11 +14,11 @@ from forms.adddriverform import DriverForm
 from forms.addrouteform import RouteForm
 
 
-app = Flask(__name__)
-api = Api(app)
-app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+fapp = Flask(__name__)
+api = Api(fapp)
+fapp.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager.init_app(fapp)
 
 
 @login_manager.user_loader
@@ -27,8 +27,8 @@ def load_user(user_id):
     return db_sess.query(User).get(user_id)
 
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/login', methods=['GET', 'POST'])
+@fapp.route('/', methods=['GET', 'POST'])
+@fapp.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -41,19 +41,19 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
-@app.route('/logout')
+@fapp.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect('/')
 
 
-@app.errorhandler(404)
+@fapp.errorhandler(404)
 def not_found(error):
     return make_response(jsonify(({'error': 'Not found'})), 404)
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@fapp.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -86,7 +86,7 @@ def register():
 
 
 @login_required
-@app.route('/all_routes')
+@fapp.route('/all_routes')
 def all_routes():
     db_sess = db_session.create_session()
     routes = db_sess.query(Route).all()
@@ -94,7 +94,7 @@ def all_routes():
 
 
 @login_required
-@app.route('/add_route', methods=['GET', 'POST'])
+@fapp.route('/add_route', methods=['GET', 'POST'])
 def add_route():
     form = RouteForm()
     if form.validate_on_submit():
@@ -118,7 +118,7 @@ def add_route():
 
 
 @login_required
-@app.route('/edit_route/<int:route_id>', methods=['GET', 'POST'])
+@fapp.route('/edit_route/<int:route_id>', methods=['GET', 'POST'])
 def edit_route(route_id):
     form = RouteForm()
     if request.method == "GET":
@@ -158,7 +158,7 @@ def edit_route(route_id):
 
 
 @login_required
-@app.route('/delete_route/<int:route_id>', methods=['GET', 'POST'])
+@fapp.route('/delete_route/<int:route_id>', methods=['GET', 'POST'])
 def delete_route(route_id):
     db_sess = db_session.create_session()
     route = db_sess.query(Route).filter(Route.id == route_id).first()
@@ -171,7 +171,7 @@ def delete_route(route_id):
 
 
 @login_required
-@app.route('/all_buses')
+@fapp.route('/all_buses')
 def all_buses():
     db_sess = db_session.create_session()
     buses = db_sess.query(Bus).all()
@@ -179,7 +179,7 @@ def all_buses():
 
 
 @login_required
-@app.route('/add_bus', methods=['GET', 'POST'])
+@fapp.route('/add_bus', methods=['GET', 'POST'])
 def add_bus():
     form = BusForm()
     if form.validate_on_submit():
@@ -199,7 +199,7 @@ def add_bus():
 
 
 @login_required
-@app.route('/edit_bus/<int:bus_id>', methods=['GET', 'POST'])
+@fapp.route('/edit_bus/<int:bus_id>', methods=['GET', 'POST'])
 def edit_bus(bus_id):
     form = BusForm()
     if request.method == "GET":
@@ -232,7 +232,7 @@ def edit_bus(bus_id):
 
 
 @login_required
-@app.route('/delete_bus/<int:bus_id>', methods=['GET', 'POST'])
+@fapp.route('/delete_bus/<int:bus_id>', methods=['GET', 'POST'])
 def delete_bus(bus_id):
     db_sess = db_session.create_session()
     bus = db_sess.query(Bus).filter(Bus.id == bus_id).first()
@@ -245,7 +245,7 @@ def delete_bus(bus_id):
 
 
 @login_required
-@app.route('/all_drivers')
+@fapp.route('/all_drivers')
 def all_drivers():
     db_sess = db_session.create_session()
     drivers = db_sess.query(Driver).all()
@@ -253,7 +253,7 @@ def all_drivers():
 
 
 @login_required
-@app.route('/add_driver', methods=['GET', 'POST'])
+@fapp.route('/add_driver', methods=['GET', 'POST'])
 def add_driver():
     form = DriverForm()
     if form.validate_on_submit():
@@ -273,7 +273,7 @@ def add_driver():
 
 
 @login_required
-@app.route('/edit_driver/<int:driver_id>', methods=['GET', 'POST'])
+@fapp.route('/edit_driver/<int:driver_id>', methods=['GET', 'POST'])
 def edit_driver(driver_id):
     form = DriverForm()
     if request.method == "GET":
@@ -302,7 +302,7 @@ def edit_driver(driver_id):
 
 
 @login_required
-@app.route('/delete_driver/<int:driver_id>', methods=['GET', 'POST'])
+@fapp.route('/delete_driver/<int:driver_id>', methods=['GET', 'POST'])
 def delete_driver(driver_id):
     db_sess = db_session.create_session()
     driver = db_sess.query(Driver).filter(Driver.id == driver_id).first()
@@ -323,4 +323,4 @@ api.add_resource(buses_resources.BusListResource, '/api/buses')
 api.add_resource(buses_resources.BusResource, '/api/buses/<int:bus_id>')
 api.add_resource(routes_resources.RouteListResource, '/api/routes')
 api.add_resource(routes_resources.RouteResource, '/api/routes/<int:route_id>')
-app.run(host='127.0.0.1', port=8080)
+fapp.run(host='127.0.0.1', port=8080)

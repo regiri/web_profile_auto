@@ -45,7 +45,7 @@ class BusListResource(Resource):
         buses = db_sess.query(Bus).all()
         return jsonify({'bus': [item.to_dict(
             only=('number', 'brand', 'last_maintenance', 'next_maintenance', 'seats_number', 'about')
-        )] for item in buses})
+        ) for item in buses]})
 
     def post(self):
         args = parser.parse_args()

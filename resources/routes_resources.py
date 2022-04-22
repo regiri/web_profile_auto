@@ -51,7 +51,7 @@ class RouteListResource(Resource):
         return jsonify({'route': [item.to_dict(
             only=('route_name', 'start_date', 'end_date', 'start_time', 'end_time',
                   'start_point', 'end_point', 'driver_id', 'user_id', 'bus_id')
-        )] for item in routes})
+        ) for item in routes]})
 
     def post(self):
         args = parser.parse_args()

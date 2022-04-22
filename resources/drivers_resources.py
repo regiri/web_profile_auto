@@ -42,7 +42,7 @@ class DriversListResource(Resource):
         drivers = db_sess.query(Driver).all()
         return jsonify({'driver': [item.to_dict(
             only=('name', 'surname', 'lastname', 'phone_number')
-        )] for item in drivers})
+        ) for item in drivers]})
 
     def post(self):
         args = parser.parse_args()
