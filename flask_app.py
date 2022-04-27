@@ -314,13 +314,18 @@ def delete_driver(driver_id):
     return redirect('/all_drivers')
 
 
-if __name__ == 'app':
-    db_session.global_init("/home/regiri1/mysite/db/profile_auto.sqlite")
-
 api.add_resource(drivers_resources.DriversListResource, '/api/drivers')
 api.add_resource(drivers_resources.DriverResource, '/api/drivers/<int:driver_id>')
 api.add_resource(buses_resources.BusListResource, '/api/buses')
 api.add_resource(buses_resources.BusResource, '/api/buses/<int:bus_id>')
 api.add_resource(routes_resources.RouteListResource, '/api/routes')
 api.add_resource(routes_resources.RouteResource, '/api/routes/<int:route_id>')
-fapp.run()
+
+print(__name__)
+db_session.global_init("/home/regiri1/mysite/db/profile_auto.sqlite")
+if __name__ == 'flask_app':
+    print("here")
+    fapp.run()
+
+
+
