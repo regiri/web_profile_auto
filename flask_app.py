@@ -322,7 +322,7 @@ api.add_resource(routes_resources.RouteListResource, '/api/routes')
 api.add_resource(routes_resources.RouteResource, '/api/routes/<int:route_id>')
 
 print(__name__)
-db_session.global_init("/home/regiri1/mysite/db/profile_auto.sqlite")
+db_session.global_init("db/profile_auto.sqlite")
 if __name__ == 'flask_app':
     print("here")
     fapp.run()
