@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, render_template, redirect, make_response, jsonify, request, abort
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_restful import Api
@@ -36,7 +37,7 @@ def login():
         user = db_sess.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect('/all_routes')
+            return redirect('/employments')
         return render_template('login.html', message='Неправильный логин или пароль', form=form)
     return render_template('login.html', title='Авторизация', form=form)
 
@@ -45,7 +46,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect('/')
+    return redirect('/login')
 
 
 @fapp.errorhandler(404)
@@ -147,8 +148,8 @@ def edit_route(route_id):
             route.end_date = form.end_date.data
             route.start_time = form.start_time.data
             route.end_time = form.end_time.data
-            route.driver_id = form.driver.id
-            route.bus_id = form.bus.id
+            route.driver_id = form.driver.data.id
+            route.bus_id = form.bus.data.id
             route.user_id = current_user.id
             db_sess.commit()
             return redirect('/all_routes')
@@ -314,6 +315,31 @@ def delete_driver(driver_id):
     return redirect('/all_drivers')
 
 
+@login_required
+@fapp.route('/employments')
+def employments():
+    db_sess = db_session.create_session()
+    workers = db_sess.query(Driver).all()
+    result = []
+    monday = datetime.date.today() - datetime.timedelta(days=datetime.date.today().weekday())
+    sunday = monday + datetime.timedelta(days=6)
+    for worker in workers:
+        raw = [worker.surname + ' ' + worker.name] + [0 for _ in range(7)]
+        driver_routes = db_sess.query(Route).filter(Route.driver_id == worker.id).all()
+        for rt in driver_routes:
+            if monday <= rt.start_date <= sunday:
+                weekday = datetime.date(rt.start_date.year, rt.start_date.month, rt.start_date.day).isoweekday()
+                work_time = rt.end_time.hour - rt.start_time.hour
+                raw[weekday] += work_time
+        raw.append(sum(raw[1:]))
+        result.append(raw)
+    return render_template(
+        'employments.html',
+        title=f'Занятость водителей с {monday.strftime("%d.%m")} по {sunday.strftime("%d.%m")}',
+        drivers=result
+    )
+
+
 api.add_resource(drivers_resources.DriversListResource, '/api/drivers')
 api.add_resource(drivers_resources.DriverResource, '/api/drivers/<int:driver_id>')
 api.add_resource(buses_resources.BusListResource, '/api/buses')
@@ -324,7 +350,6 @@ api.add_resource(routes_resources.RouteResource, '/api/routes/<int:route_id>')
 print(__name__)
 db_session.global_init("db/profile_auto.sqlite")
 if __name__ == 'flask_app':
-    print("here")
     fapp.run()
 
 
