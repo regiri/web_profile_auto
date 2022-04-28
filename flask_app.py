@@ -12,6 +12,7 @@ from forms.registerform import RegisterForm
 from forms.addbusform import BusForm
 from forms.adddriverform import DriverForm
 from forms.addrouteform import RouteForm
+from map_functions import get_map_with_route
 
 
 fapp = Flask(__name__)
@@ -114,7 +115,7 @@ def add_route():
         db_sess.add(route)
         db_sess.commit()
         return redirect('/all_routes')
-    return render_template('route.html', form=form, title='Добавление маршрута')
+    return render_template('route.html', form=form, title='Добавление маршрута', get_map_url=get_map_with_route)
 
 
 @login_required
@@ -154,7 +155,7 @@ def edit_route(route_id):
             return redirect('/all_routes')
         else:
             abort(404)
-    return render_template('route.html', form=form, title='Редактирование маршрута')
+    return render_template('route.html', form=form, title='Редактирование маршрута', get_map_url=get_map_with_route)
 
 
 @login_required
@@ -321,10 +322,8 @@ api.add_resource(buses_resources.BusResource, '/api/buses/<int:bus_id>')
 api.add_resource(routes_resources.RouteListResource, '/api/routes')
 api.add_resource(routes_resources.RouteResource, '/api/routes/<int:route_id>')
 
-print(__name__)
-db_session.global_init("/home/regiri1/mysite/db/profile_auto.sqlite")
+db_session.global_init("db/profile_auto.sqlite")
 if __name__ == 'flask_app':
-    print("here")
     fapp.run()
 
 
