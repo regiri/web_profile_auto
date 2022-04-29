@@ -7,6 +7,7 @@
     <h3>{{ item.surname }}</h3>
     <div>{{ item.name }}</div>
     <div>Тел.: {{ item.phone_number }}</div>
+    {% if current_user.is_authenticated %}
     <div>
         <a class="btn btn-outline-secondary" href="/edit_driver/{{ item.id }}">
             Изменить
@@ -15,7 +16,10 @@
             Удалить
         </a>
     </div>
+    {% endif %}
 </div>
 {% endfor %}
+    {% if current_user.is_authenticated %}
     <a class="btn btn-outline-primary" href="/add_driver">Добавить водителя</a>
+    {% endif %}
 {% endblock %}

@@ -8,6 +8,7 @@
     <div>{{ item.start_date }}, {{ item.start_time }}</div>
     <div>{{ item.end_date }}, {{ item.end_time }}</div>
     <div>Откуда: {{ item.start_point }}, Куда: {{ item.end_point }}</div>
+    {% if current_user.is_authenticated %}
     <div>
         <a class="btn btn-outline-secondary" href="/edit_route/{{ item.id }}">
             Изменить
@@ -16,7 +17,10 @@
             Удалить
         </a>
     </div>
+    {% endif %}
 </div>
 {% endfor %}
+    {% if current_user.is_authenticated %}
     <a class="btn btn-outline-primary" href="/add_route">Добавить маршрут</a>
+    {% endif %}
 {% endblock %}
