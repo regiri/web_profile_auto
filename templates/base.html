@@ -14,10 +14,11 @@
             <nav class="navbar navbar-dark bg-primary">
                 <a class="navbar-brand" href="#">Профиль Авто</a>
                 <div>
+                    <a class="btn btn-outline-light" href="/employments">Занятость</a>
+                    <a class="btn btn-outline-light" href="/all_buses">Автобусы</a>
+                    <a class="btn btn-outline-light" href="/all_drivers">Водители</a>
+                    <a class="btn btn-outline-light" href="/all_routes">Рейсы</a>
                     {% if current_user.is_authenticated %}
-                        <a class="btn btn-outline-light" href="/all_buses">Автобусы</a>
-                        <a class="btn btn-outline-light" href="/all_drivers">Водители</a>
-                        <a class="btn btn-outline-light" href="/all_routes">Рейсы</a>
                         <a class="btn btn-danger" href="/logout">Выйти</a>
                     {% else %}
                         <a class="btn btn-outline-light" href="/login">Войти</a>

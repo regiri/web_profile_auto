@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ title }}</h2>
+<table class="table table-striped">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">Водитель</th>
+        <th scope="col">пн</th>
+        <th scope="col">вт</th>
+        <th scope="col">ср</th>
+        <th scope="col">чт</th>
+        <th scope="col">пт</th>
+        <th scope="col">сб</th>
+        <th scope="col">вс</th>
+        <th scope="col">Всего часов</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for raw in drivers%}
+        <tr>
+            {% for cell in raw %}
+                <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
